@@ -145,4 +145,4 @@ SECRET_KEY=...
 
 ---
 
-**SimuPrime v17 — portage Cloudflare Workers — Developed by TEAM TMM 🦄**
+*SimuPrime — portage Cloudflare Workers — Developed by TEAM TMM 🦄*

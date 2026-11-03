@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Glossaire — Calculateur de prime</title>
+  <link rel="icon" type="image/svg+xml" href="/img/logo.svg"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body class="app-page">
+
+<nav class="topbar">
+  <div class="brand">
+    <img src="/img/logo.svg" alt="logo"/>
+    <span class="brand-title">Calculateur de prime de régularité</span>
+  </div>
+  <div class="topbar-actions">
+    <a class="btn btn-ghost btn-sm" href="/">← Simulateur</a>
+    __ADMIN_START__<a class="btn btn-ghost btn-sm" href="/admin">⚙ Admin</a>__ADMIN_END__
+    <span class="badge-role">__ROLE__</span>
+    <button id="btn-logout" class="btn btn-ghost btn-sm">Déconnexion</button>
+  </div>
+</nav>
+
+<main class="glo-main">
+
+  <!-- ═══════ Bannière ═══════ -->
+  <section class="glo-hero reveal">
+    <div class="glo-hero-badge">📖</div>
+    <h1>Glossaire <em>&amp;</em> Mode opératoire</h1>
+    <p>Tout ce qu'il faut savoir pour simuler une prime de régularité en quelques minutes.</p>
+    <nav class="glo-nav">
+      <a href="#etapes">🚀 Démarrage</a>
+      <a href="#profils">🏷️ Profils</a>
+      <a href="#regles">🧮 Règles de calcul</a>
+      <a href="#astuces">💡 Bon à savoir</a>
+      __ADMIN_START__<a href="#admin">⚙ Admin</a>__ADMIN_END__
+    </nav>
+  </section>
+
+  <!-- ═══════ Étapes ═══════ -->
+  <section id="etapes" class="card glo-card reveal">
+    <h2><span class="chip">🚀</span> Les 5 étapes d'une simulation</h2>
+    <ol class="glo-steps">
+      <li class="glo-step">
+        <span class="gs-badge">1</span>
+        <div class="gs-body">
+          <h3>Identifier le collaborateur</h3>
+          <p>Saisissez son <b>matricule WKD</b> ou son <b>matricule paie</b>, puis cliquez
+             sur 🔍. Typo (TECH / SIMPLE), site, date d'embauche et MSA se remplissent
+             automatiquement.</p>
+          <div class="gs-tags"><span class="gtag">ex : 102573627</span><span class="gtag">ex : W14503</span></div>
+        </div>
+      </li>
+      <li class="glo-step">
+        <span class="gs-badge">2</span>
+        <div class="gs-body">
+          <h3>Choisir le mois de paie</h3>
+          <p>Le mois de paie est le <b>M+1 du mois de performance</b> (paie Octobre →
+             performance Septembre). La <b>base d'heures</b> se calcule automatiquement sur
+             le mois de performance (jours ouvrés × 8 h) — modifiable.</p>
+        </div>
+      </li>
+      <li class="glo-step">
+        <span class="gs-badge">3</span>
+        <div class="gs-body">
+          <h3>Renseigner les activités</h3>
+          <p>Le champ <b>ID de l'activité</b> propose les activités du MSA du collaborateur
+             (toute autre ID reste saisissable). L'MSA s'affiche en vert. Ajoutez les
+             <b>heures</b> (0 autorisé) et les <b>profils des 3 derniers mois</b>.</p>
+        </div>
+      </li>
+      <li class="glo-step">
+        <span class="gs-badge">4</span>
+        <div class="gs-body">
+          <h3>Lancer le calcul</h3>
+          <p>Cliquez sur <b>✨ Calculer ma prime</b> : points, montant base et prorata
+             s'affichent par activité.</p>
+        </div>
+      </li>
+      <li class="glo-step">
+        <span class="gs-badge">5</span>
+        <div class="gs-body">
+          <h3>Lire les résultats</h3>
+          <p>Le tableau détaille chaque activité. En dessous, les <b>règles du payplan
+             appliquées</b> : cliquez sur une activité pour voir ses conditions, les mois
+             comptés, le barème et la formule du prorata.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ═══════ Profils ═══════ -->
+  <section id="profils" class="card glo-card reveal">
+    <h2><span class="chip">🏷️</span> Profils &amp; points</h2>
+    <div class="glo-profiles">
+      <div class="gprof g-green">
+        <span class="gp-emoji">🏆</span><b>Leader</b>
+        <span class="gp-pts">3 pts</span>
+        <small>Performance élevée</small>
+      </div>
+      <div class="gprof g-yellow">
+        <span class="gp-emoji">⚡</span><b>Challenger</b>
+                <span class="gp-pts">2 pts</span>
+        <small>3 pts avant perf Sept. 2026</small>
+        <small>Bonne performance</small>
+      </div>
+      <div class="gprof g-orange">
+        <span class="gp-emoji">🌱</span><b>Fragile</b>
+        <span class="gp-pts">1 pt</span>
+        <small>Performance à consolider</small>
+      </div>
+      <div class="gprof g-red">
+        <span class="gp-emoji">🤝</span><b>Care</b>
+        <span class="gp-pts">0 pt</span>
+        <small>En accompagnement</small>
+      </div>
+      <div class="gprof g-gray">
+        <span class="gp-emoji">➖</span><b>Non évalué</b>
+        <span class="gp-pts">vide</span>
+        <small>Aucun point attribué</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ Règles de calcul ═══════ -->
+  <section id="regles" class="card glo-card reveal">
+    <h2><span class="chip">🧮</span> Règles de calcul</h2>
+
+    <div class="glo-rule g-orange">
+      <h3>⚠️ Dégradation</h3>
+      <p>Si le profil du <b>dernier mois</b> est en baisse par rapport au mois précédent,
+         ses points <b>ne sont pas comptés</b>.</p>
+      <div class="gex">Leader · Leader · Fragile → 3 + 3 + <s>1</s> = <b>6 pts</b></div>
+    </div>
+
+    <div class="glo-rule g-blue">
+      <h3>🆕 Nouveaux intégrants (ancienneté 4 à 6 mois)</h3>
+      <p>Le profil du <b>1ᵉʳ mois n'est pas pris en compte</b> : seuls les 2 derniers
+         mois comptent.</p>
+      <div class="gex">M1 ignoré · M2 + M3 seulement</div>
+    </div>
+
+    <div class="glo-rule g-violet">
+      <h3>➗ Prorata</h3>
+      <p>Chaque activité a son <b>montant base</b> (selon site, MSA, date d'embauche,
+         ancienneté et points), ensuite proratisé :</p>
+      <div class="gex gex-formule">Prime = Σ [ montant base × (heures ÷ base d'heures) ]</div>
+      <div class="gex">185 000 Ar × (88 h ÷ 176 h) = <b>92 500 Ar</b></div>
+    </div>
+  </section>
+
+  <!-- ═══════ Astuces ═══════ -->
+  <section id="astuces" class="card glo-card reveal">
+    <h2><span class="chip">💡</span> Bon à savoir</h2>
+    <div class="glo-tips">
+      <div class="gtip"><b>🗓️ Mois de paie = M+1</b>
+        <span>Paie Octobre → performance Septembre : base d'heures, profils et
+        ancienneté suivent le mois de performance.</span></div>
+      <div class="gtip"><b>🕒 Base d'heures auto</b>
+        <span>Jours ouvrés du mois de performance × 8 h — le champ reste
+        modifiable si besoin.</span></div>
+      <div class="gtip"><b>0️⃣ Heures à 0</b>
+        <span>Une activité peut avoir 0 heure : son montant proratisé sera 0 Ar.</span></div>
+      <div class="gtip"><b>🔒 Sessions privées</b>
+        <span>« Mes simulations » n'est visible que par vous. Le bouton 🗑 les
+        supprime, 🔄 réinitialise le formulaire.</span></div>
+    </div>
+  </section>
+
+  __ADMIN_START__
+  <!-- ═══════ Admin ═══════ -->
+  <section id="admin" class="card glo-card reveal">
+    <h2><span class="chip">⚙</span> Espace administration</h2>
+    <div class="glo-admin">
+      <div class="gadm adm-blue"><span>⬆</span><b>Extraction ACTIF</b>
+        <small>Glisser-déposer ACTIF.xlsx → alimente la recherche par matricule.</small></div>
+      <div class="gadm adm-cyan"><span>🔗</span><b>Référentiel Activités ↔ MSA</b>
+        <small>Lien ID d'activité → MSA + libellé. Import Excel ou édition manuelle.</small></div>
+      <div class="gadm adm-violet"><span>📊</span><b>Payplan</b>
+        <small>Import de la matrice Excel ou édition des règles et paliers. Effet
+        immédiat sur les calculs.</small></div>
+      <div class="gadm adm-gold"><span>🗂</span><b>Historique</b>
+        <small>Toutes les simulations, filtrables et exportables en CSV.</small></div>
+    </div>
+  </section>
+  __ADMIN_END__
+
+</main>
+
+<footer class="footer-fix" style="position:fixed;bottom:10px;right:20px;z-index:9998;background:transparent;border:none;box-shadow:none;border-radius:0;padding:4px 6px;font-size:11px;font-weight:300;letter-spacing:.3px;color:#A0AEC0;cursor:default;user-select:none;">Developed by <span style="font-weight:bold;letter-spacing:1px;text-transform:uppercase;color:#00D1B2;">TEAM TMM 🦄</span></footer>
+<div id="toasts"></div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("btn-logout").onclick = async () => {
+      try { await fetch("/api/auth/logout", { method: "POST" }); } catch (e) {}
+      location.href = "/login";
+    };
+  });
+</script>
+</body>
+</html>

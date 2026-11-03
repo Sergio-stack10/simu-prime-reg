@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Administration — Calculateur de prime</title>
+  <link rel="icon" type="image/svg+xml" href="/img/logo.svg"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body class="app-page">
+
+<nav class="topbar">
+  <div class="brand">
+    <img src="/img/logo.svg" alt="logo"/>
+    <span>Panneau d'administration</span>
+  </div>
+  <div class="topbar-actions">
+    <a class="btn btn-ghost btn-sm" href="/">← Simulateur</a>
+    <a class="btn btn-ghost btn-sm" href="/glossaire">📖 Glossaire</a>
+    <span class="badge-role">ADMIN</span>
+    <button id="btn-logout" class="btn btn-ghost btn-sm">Déconnexion</button>
+  </div>
+</nav>
+
+<main class="app-main">
+
+  <section class="stats-grid reveal">
+    <div class="stat-card"><span class="stat-chip">👥</span>
+      <div><span class="stat-value" id="stat-employees">0</span>
+      <span class="stat-label">Collaborateurs ACTIF</span></div></div>
+    <div class="stat-card"><span class="stat-chip">🧮</span>
+      <div><span class="stat-value" id="stat-sims">0</span>
+      <span class="stat-label">Simulations</span></div></div>
+    <div class="stat-card"><span class="stat-chip">🗄️</span>
+      <div><span class="stat-value stat-small" id="stat-db">—</span>
+      <span class="stat-label">Base de données</span></div></div>
+    <div class="stat-card"><span class="stat-chip">📅</span>
+      <div><span class="stat-value stat-small" id="stat-actif">—</span>
+      <span class="stat-label">Dernier chargement ACTIF</span></div></div>
+  </section>
+
+  <section class="card reveal" style="--d:.06s">
+    <h2><span class="chip">⬆</span> Extraction ACTIF</h2>
+    <div class="dropzone" id="dropzone">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M12 16V4m0 0l-4 4m4-4l4 4"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/>
+      </svg>
+      <p><b>Glissez-déposez</b> votre fichier <code>ACTIF.xlsx</code> ici<br/>
+         <span class="muted">ou cliquez pour parcourir</span></p>
+    </div>
+    <input type="file" id="file-actif" accept=".xlsx,.xls" hidden/>
+    <p id="upload-status" class="muted small"></p>
+  </section>
+
+  <section class="card reveal" style="--d:.1s">
+    <h2><span class="chip">🔗</span> 📥 Importer l'Excel du payplan (matrice)</button>
+Référentiel Activités ↔ MSA</h2>
+    <div class="ref-import">
+      <input type="file" id="file-ref" accept=".xlsx,.xls" hidden/>
+      <button id="ref-import-btn" class="btn btn-ghost btn-sm">📥 Importer l'Excel du référentiel</button>
+      <span id="ref-import-status" class="muted small"></span>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th style="width:140px">ID activité</th><th style="width:140px">MSA</th>
+          <th>Libellé de l'activité</th><th style="width:50px"></th></tr></thead>
+        <tbody id="ref-body"></tbody>
+      </table>
+    </div>
+    <div class="pp-actions">
+      <button id="ref-add" class="btn btn-ghost">+ Ligne</button>
+      <span style="flex:1"></span>
+      <span class="muted small" id="ref-count"></span>
+      <button id="ref-reset" class="btn btn-ghost">⟲ Réinitialiser</button>
+      <button id="ref-save" class="btn btn-primary">💾 Enregistrer</button>
+    </div>
+  </section>
+
+  <section class="card reveal" style="--d:.14s">
+    <h2><span class="chip">⚙</span> Payplan</h2>
+
+    <div class="ref-import">
+      <input type="file" id="file-payplan" accept=".xlsx,.xls" hidden/>
+      <button id="pp-import-btn" class="btn btn-primary btn-sm">📥 Importer l'Excel du payplan (matrice)</button>
+      <a class="btn btn-ghost btn-sm" href="/api/payplan/template">📄 Télécharger le modèle</a>
+      <span id="pp-import-status" class="muted small"></span>
+    </div>
+    <div class="alert warn" id="pp-warning" hidden></div>
+
+    <h3 class="pp-subtitle">Points par profil (champ vide = aucun point)</h3>
+    <div id="pp-profiles" class="pp-rows"></div>
+    <button id="pp-add-profil" class="btn btn-ghost btn-sm">+ Profil</button>
+
+    <h3 class="pp-subtitle">Règles (priorité : règles CPSA d'abord, puis index # croissant)</h3>
+    <div id="pp-rules"></div>
+
+    <div class="pp-actions">
+      <button id="pp-add-rule" class="btn btn-ghost">+ Ajouter une règle</button>
+      <span style="flex:1"></span>
+      <button id="pp-reset" class="btn btn-ghost">↻ Recharger</button>
+      <button id="pp-save" class="btn btn-primary">💾 Enregistrer le payplan</button>
+    </div>
+    <p class="muted small">Vos importations et saisies ne sont jamais écrasées automatiquement.</p>
+  </section>
+
+  <section class="card reveal" style="--d:.18s">
+    <h2><span class="chip">🗂</span> Historique des simulations
+      <span class="muted small" id="sims-count" style="margin-left:auto"></span></h2>
+    <div class="sims-toolbar">
+      <input id="sims-search" type="text" placeholder="🔎 Filtrer (matricule, nom, site…)"/>
+      <button id="btn-refresh-admin-sims" class="btn btn-ghost btn-sm">↻</button>
+      <button id="btn-export-csv" class="btn btn-primary btn-sm">⬇ Export CSV</button>
+      <button id="btn-clear-all-sims" class="btn btn-danger btn-sm"
+              title="Vider tout l'historique (toutes sessions)">🗑 Vider l'historique</button>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Date</th><th>Matricule</th><th>Nom</th><th>Site</th>
+            <th>Activités (points)</th><th>Prime</th><th>Statut</th></tr></thead>
+        <tbody id="admin-sims-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<div id="toasts"></div>
+<script src="/js/admin.js"></script>
+<footer class="footer-fix" style="position:fixed;bottom:10px;right:20px;z-index:9998;background:transparent;border:none;box-shadow:none;border-radius:0;padding:4px 6px;font-size:11px;font-weight:300;letter-spacing:.3px;color:#A0AEC0;cursor:default;user-select:none;">Developed by <span style="font-weight:bold;letter-spacing:1px;text-transform:uppercase;color:#00D1B2;">TEAM TMM 🦄</span></footer>
+</html>
